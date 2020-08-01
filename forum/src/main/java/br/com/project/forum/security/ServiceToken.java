@@ -4,6 +4,7 @@ import br.com.project.forum.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,10 @@ public class ServiceToken {
 
     public String gerarToken(Authentication authenticate) {
 
-        Usuario logado = (Usuario) authenticate.getPrincipal();
+        val logado = (Usuario) authenticate.getPrincipal();
 
-        Date now = new Date();
-        Date tokenTime = new Date(now.getTime() + Long.parseLong(time));
+        val now = new Date();
+        val tokenTime = new Date(now.getTime() + Long.parseLong(time));
 
         return Jwts.builder()
                 .setIssuer("API do project fórum")

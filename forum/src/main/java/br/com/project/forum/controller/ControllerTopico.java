@@ -6,6 +6,9 @@ import br.com.project.forum.controller.dto.TopicoForm;
 import br.com.project.forum.model.Topico;
 import br.com.project.forum.repository.RepositoryCurso;
 import br.com.project.forum.repository.RepositoryTopico;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,13 +27,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController//Ira mapear todos os retornos de metodos dentro do meu controller como responseBody
+@RequiredArgsConstructor
+@AllArgsConstructor
 @RequestMapping(value = "/api/v1/topicos")
 public class ControllerTopico {
 
-    @Autowired
     private RepositoryTopico repositoryTopico;
 
-    @Autowired
     private RepositoryCurso repositoryCurso;
 
 
@@ -58,11 +61,11 @@ public class ControllerTopico {
     public ResponseEntity<TopicoDTO> cadastrar(@RequestBody @Valid TopicoForm form,
                                                UriComponentsBuilder uriBuilder){
 
-        Topico topico = form.convert(repositoryCurso);
+        val topico = form.convert(repositoryCurso);
 
         repositoryTopico.save(topico);
 
-        URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+        val uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new TopicoDTO(topico));
     }

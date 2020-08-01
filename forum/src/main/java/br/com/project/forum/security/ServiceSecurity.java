@@ -3,6 +3,8 @@ package br.com.project.forum.security;
 
 import br.com.project.forum.model.Usuario;
 import br.com.project.forum.repository.RepositoryUsuario;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ServiceSecurity implements UserDetailsService {
 
-    @Autowired
     private RepositoryUsuario repositoryUsuario;
 
     @Override

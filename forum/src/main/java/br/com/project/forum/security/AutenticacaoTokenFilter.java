@@ -2,6 +2,7 @@ package br.com.project.forum.security;
 
 import br.com.project.forum.model.Usuario;
 import br.com.project.forum.repository.RepositoryUsuario;
+import lombok.val;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -39,7 +40,7 @@ public class AutenticacaoTokenFilter extends OncePerRequestFilter {
 
     private String recuperarToken(HttpServletRequest request) {
 
-        String token = request.getHeader("Authorization");
+        var token = request.getHeader("Authorization");
         if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
             return null;
         }
@@ -50,7 +51,7 @@ public class AutenticacaoTokenFilter extends OncePerRequestFilter {
     private void autenticarCliente(String token) {
 
         var usuarioId = serviceToken.getIdUsuario(token);
-        Usuario usuario = repositoryUsuario.findById(usuarioId).get();
+        val usuario = repositoryUsuario.findById(usuarioId).get();
         var autenticacao = new UsernamePasswordAuthenticationToken(usuarioId, null, usuario.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
     }
